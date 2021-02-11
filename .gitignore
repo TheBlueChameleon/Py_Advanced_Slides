@@ -1,0 +1,15 @@
+# tex auxillary files
+*.log
+*.toc
+*.aux
+*.lof
+*.lot
+*.synctex.gz
+*.out
+*.pdf
+*.nav
+*.snm
+*.vrb
+
+# minted folders
+_minted-*/
