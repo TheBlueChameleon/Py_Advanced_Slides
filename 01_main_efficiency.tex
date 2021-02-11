@@ -2,7 +2,7 @@
 % Yes. This is a document.
 
 \documentclass[
-	ngerman,
+	english,
 	aspectratio=169,
 	table
 ]{beamer}
@@ -43,8 +43,18 @@
 \usepackage{color, colortbl}
 \usepackage{xcolor}
 	\definecolor{tabhighlight}{RGB}{230,240,255}
+	\definecolor{tabcontrast} {RGB}{200,210,255}
 
 \usepackage{tabto}
+\usepackage{xspace}
+
+% math
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage[arrowdel]{physics}
+\usepackage{mathtools}
+\usepackage{siunitx}
 
 \usepackage{minted}
 	\usemintedstyle{friendly}
@@ -64,7 +74,8 @@
 		{colback=cyan!10!white,
 		 colframe=cyan!75!black,
 		 arc=0pt,
-		 outer arc=0pt
+		 outer arc=0pt,
+		 parbox=false
 		}
 	\newtcolorbox{codebox}[1][Code]
 		{colback=black!5!white,
@@ -103,25 +114,23 @@
 %==============================================================================%
 % GLOBAL MACROS
 
-\newcommand*{\zB}{z.\,B. }
-\newcommand*{\ua}{u.\,a. }
-\newcommand*{\ie}{d.\,h. }			%% dh is already a defined macro. Couldn't find out what it does.
-\newcommand*{\idR}{i.\,d.\,R. }
+\newcommand*{\eg}{e.\,g. }
+\newcommand*{\ie}{i.\,e. }
 
 \newcommand{\Thus}{\ensuremath{\Rightarrow}}
 \newcommand{\thus}{\ensuremath{\rightarrow}}
 
 \newcommand*{\tabcrlf}{\\ \midrule}			% actually still allows for optional argument
 
-\newcommand*{\inPy}[1]{\mintinline{python}{#1}}
+\newcommand*{\inPy}[1]{\mintinline{python3}{#1}}
 
 % =========================================================================== %
 
 \author{Stefan Hartinger}
-\title{Python für Fortgeschrittene}
-\subtitle{Kursteil 1: Arbeitsumgebung und erste Schritte}
-\institute{Universität Regensburg, Fakultät Physik}
-\date{Wintersemester 2020/21}
+\title{Python for Scientific Applications}
+\subtitle{Part 1: Efficiency}
+\institute{University of Regensburg, department for theoretical physics}
+\date{Summer Term 2021}
 
 % =========================================================================== %
 
