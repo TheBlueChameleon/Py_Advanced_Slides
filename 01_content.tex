@@ -122,7 +122,7 @@ data = [...]
 def findMin(data) :
     theMin = data[0]
     idxMin = 0
-    for i, x in data :
+    for i, x in enumerate(data) :
         if theMin > x :
             idxMin = i
             theMin = x
