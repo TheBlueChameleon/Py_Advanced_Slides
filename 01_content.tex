@@ -110,7 +110,7 @@ print(f"it took {toc - tic} second to "
 	\item 2 assigments per iteration (\texttt{i}, \texttt{x})
 	\item $N$ comparisons
 	\item 0 assignments in the loop
-	\item[\Thus] $4 + N$ FLOPs
+	\item[\Thus] $2 + 3N$ FLOPs
 	\end{itemize}
 \end{itemize}
 %
@@ -135,7 +135,7 @@ def findMin(data) :
 	\begin{itemize}
 	\item Enter \inPy{if} block every time
 	\item 2 assignments per loop
-	\item[\Thus] $4 + 3N$ FLOPs
+	\item[\Thus] $2 + 5N$ FLOPs
 	\end{itemize}
 \end{itemize}
 \end{columns}
@@ -232,7 +232,7 @@ We usually are interested in the behaviour for big $N$
 			{g(x)}
 		< \infty
 	\end{align*}
-	\item $\Theta(f(N)), \Omega(f(N))$ (imprecisely): Upper/lower bound of growth rate
+	\item $\Omega(f(N)), \Theta(f(N))$ (imprecisely): lower bound of growth rate, exact growth class
 	\end{itemize}
 \end{itemize}
 %
@@ -243,10 +243,31 @@ We usually are interested in the behaviour for big $N$
 \item $\mathcal{O}(N^{\alpha})$ (\emph{polynomial time}) for any $\alpha > 0$ is faster than
 \item $\mathcal{O}(N^{\alpha} \log(N))$ is faster than
 \item $\mathcal{O}(N^{\beta})$ for any $\beta > \alpha$ is faster than
-\item $\mathcal{O}(\exp(N))$ (\emph{exponential time}) is faster than
-\item $\mathcal{O}(N^N)$ or $\mathcal{O}(N!)$ is faster than ...
+\item $\mathcal{O}(\exp(N^\alpha))$  for any $\alpha > 0$ (\emph{exponential time}) is faster than
+\item $\mathcal{O}(N^N)$ or $\mathcal{O}(N!)$ (\emph{factorial} time) is faster than ...
 \end{itemize}
 \end{columns}
+%
+\begin{center}
+Albeit different, most programmers use $\mathcal{O}$ and $\Theta$ interchangeably
+\end{center}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Big O notation}
+%
+\includegraphics[width=\linewidth]{./gfx/BigOSymbols}
+%
+{\scriptsize
+\begin{center}
+(a): $f(n) \in \mathcal{O}(g(n))$\\
+(b): $f(n) \in \Omega(g(n))$\\
+(c): $f(n) \in \Theta(g(n))$
+\end{center}
+Source: \emph{The Algorithm Design Manual} (Third Edition) by Steven S. Skiena, p35
+}
 %
 \end{frame}
 
