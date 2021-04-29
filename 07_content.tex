@@ -300,7 +300,7 @@ Source: \url{https://xkcd.com/1360/}
 	\end{itemize}
 \item \inPy{os.scandir(path='.')}
 	\begin{itemize}
-	\item Returns iterator to \texttt{os.Direntry} object
+	\item Returns iterator to \texttt{os.Direntry} object (see next slide)
 	\item Object has \inPy{__enter__} and \inPy{__exit__}, \ie is compatible with \inPy{with}:\\
 \begin{minted}{python3}
 with os.scandir() as it :
@@ -344,21 +344,88 @@ with os.scandir() as it :
 
 % =========================================================================== %
 
+\begin{frame}[fragile]
+%
+\begin{tcbraster}[raster columns=2,
+                  raster equal height,
+                  nobeforeafter,
+                  raster column skip=0.5cm]
+\begin{codebox}[Example: \texttt{listdir}]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import os
+
+
+for entry in os.listdir() :
+    print(entry)
+\end{minted}
+\end{codebox}
+%
+\begin{codebox}[Example: \texttt{scandir}]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import os
+
+with os.scandir() as it :
+    for entry in it :
+        print(entry)
+        \end{minted}
+\end{codebox}
+\end{tcbraster}
+%
+\begin{tcbraster}[raster columns=2,
+                  raster equal height,
+                  nobeforeafter,
+                  raster column skip=0.5cm]
+\begin{cmdbox}[Output: \texttt{scandir}]
+\begin{minted}[fontsize=\scriptsize]{text}
+Erstiheft
+schausche.jpg
+stuff01
+civ3-ptw-manual.pdf
+RBS.txt
+.directory
+stuff2
+stuff1
+PK_Strunk_Exp_Mechanik.pdf
+\end{minted}
+\end{cmdbox}
+%
+\begin{cmdbox}[Output: \texttt{listdir}]
+\begin{minted}[fontsize=\scriptsize]{text}
+<DirEntry 'Erstiheft'>
+<DirEntry 'schausche.jpg'>
+<DirEntry 'stuff01'>
+<DirEntry 'civ3-ptw-manual.pdf'>
+<DirEntry 'RBS.txt'>
+<DirEntry '.directory'>
+<DirEntry 'stuff2'>
+<DirEntry 'stuff1'>
+<DirEntry 'PK_Strunk_Exp_Mechanik.pdf'>
+\end{minted}
+\end{cmdbox}
+\end{tcbraster}
+%
+\end{frame}
+
+% =========================================================================== %
+
 \begin{frame}{Traversing the File System: \texttt{glob} Module}
 %
 \begin{itemize}
 \item Often: Need to filter for a certain file type (\eg \texttt{.jpg} files)
 \item Or: Need to traverse \emph{recursively} (subfolders of subfolders of ...)
-\item[\Thus] Module \texttt{glob} provides solutions, built from \texttt{os}
 \item \inPy{glob.glob(path, recursive=False)}
 	\begin{itemize}
 	\item Return a (possibly empty) \inPy{list} of strings
 	\item Relative to \texttt{path}
-	\item May contain Wildcards
+	\item May contain \emph{Wildcards} (see next slide)
 	\item If \inPy{recursive=True}, subfolders are explored, too
 	\item Broken symlinks are included
 	\end{itemize}
 \end{itemize}
+%
+\begin{hintbox}[Module \texttt{pathlib}]
+Pythons \texttt{pathlib} offes an object oriented approach to file system travesal. It is built upon \texttt{os} and \texttt{glob}, but a little more unwieldy for most cases. Go have a look at it under \url{https://docs.python.org/3/library/pathlib.html}.
+\end{hintbox}
 %
 \end{frame}
 
@@ -390,6 +457,243 @@ If your filenames contain ?, *, <, |, >, [, ], /, \, " or \$, you're using your 
 \end{hintbox}
 %
 \end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{codebox}[Example: Traversal]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import glob
+
+print( glob.glob("**") )
+print( glob.glob("**/*.tex", recursive=True) )
+\end{minted}
+\end{codebox}
+%
+\begin{cmdbox}[Output: Traversal]
+\begin{minted}[fontsize=\scriptsize]{text}
+['02-codes', 'Install-Lines', '00-blurb', '04-vids', 'sebi-notes', 'gesina-notes',
+ 'unicode-fail.png', '01-tex', 'notepad-plus-utf8.png', 'tree.py', '03-exos']
+['01-tex/03_main_decorators.tex', '01-tex/02_main_iterators.tex', '01-tex/01_content.tex',
+ '01-tex/05_content.tex', '01-tex/01_main_efficiency.tex', '01-tex/04_content.tex',
+ '01-tex/07_content.tex', '01-tex/06_content.tex', '01-tex/02_content.tex',
+ '01-tex/04_main_SciPy.tex', '01-tex/05_main_tkInter.tex', '01-tex/06_main_pandas.tex',
+ '01-tex/07_main_ossysglob.tex', '01-tex/03_content.tex',
+ '01-tex/99_content-template.tex', '03-exos/X03/03-problems.tex',
+ '03-exos/X04/04-problems.tex', '03-exos/X06/06-problems.tex',
+ '03-exos/X02/02-problems.tex', '03-exos/X01/01-problems.tex',
+ '03-exos/X05/05-problems.tex']
+\end{minted}
+\end{cmdbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Path Utility Module -- \texttt{os.path}}
+%
+\begin{itemize}
+\item \texttt{os.path.abspath(path)} -- get the absolute path from a location relative to the CWD
+	\begin{itemize}
+	\item \inPy{"someString" } gives \inPy{"/absolute/path/to/someString"}
+	\item \inPy{"/someString"} gives \inPy{"/someString"}
+	\end{itemize}
+\item \texttt{os.path.join(pathA, pathB)} -- concatenates strings and makes sure slashes are joint correctly
+	\begin{itemize}
+	\item \inPy{"A" , "B"} gives \inPy{"A/B"}
+	\item \inPy{"A/", "B"} gives \inPy{"A/B"}
+	\item \inPy{"A", "/B"} gives \inPy{"/B"}
+	\end{itemize}
+\item \texttt{os.path.split(path)} -- splits \texttt{path} into \texttt{[directory, filename]}
+	\begin{itemize}
+	\item \inPy{"root/directory/someFile"} gives \inPy{["root/directory", "someFile"]}
+	\item \inPy{"root/directory/someFile/"} gives \inPy{["root/directory/someFile", ""]}
+	\item \inPy{"someFile"} gives \inPy{["", "someFile"]}
+	\item Note: no check whether \texttt{someFile} is actually a file!
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Path Utility Module -- \texttt{os.path}}
+%
+\begin{itemize}
+\item \texttt{os.path.exists(path)} \texttt{os.path.lexists(path)}
+	\begin{itemize}
+	\item Both return \inPy{True} if \texttt{path} specifies an existing file
+	\item Follows SymLinks
+	\item \texttt{lexists} also returns \inPy{True} for \emph{broken} SymLinks
+	\end{itemize}
+\item \texttt{os.path.getsize(path)}
+	\begin{itemize}
+	\item Returns size of file in bytes
+	\item Raises an \texttt{OSError} if the file does not exist or is inaccessible.
+	\end{itemize}
+\item \texttt{os.path.isfile(path)}, \texttt{os.path.isdir(path)}, \texttt{os.path.islink(path)}
+	\begin{itemize}
+	\item Like the methods of \texttt{os.DirEntry}
+	\end{itemize}
+\item \texttt{os.path.samefile(pathA, pathB)}
+	\begin{itemize}
+	\item Returns \inPy{True} if \texttt{pathA} and \texttt{pathB} specify the same file
+	\item Follows SymLinks
+	\item Uses Inode to do its job (\ie same content will not return \inPy{True})
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Command Line Options}
+%
+\begin{itemize}
+\item Recap: You can start your Python codes from the command line:\\
+	\texttt{python3 yourCode.py}
+\item Further command line options for the Python interpreter: \inPy{https://docs.python.org/3/using/cmdline.html}
+\item Script (or module) must be the last command line argument
+\item \texttt{sys.argv}
+	\begin{itemize}
+	\item Returns a \inPy{list} of all command line arguments
+	\item Includig the Code file
+	\item Excluding the interpreter invocation
+	\item Excluding interpreter parameters
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}
+%
+\begin{hintbox}[Shebang Mechanism for Linux and Mac]
+\small
+Text files beginning with \texttt{\#!} (called a \emph{shebang}) followed by an absolute path to an interpreter and with the executable flag set can be invoked from the source file alone.
+
+Begin your files with \texttt{\#!/usr/bin/python3} and start them from console like a regular command
+\end{hintbox}
+%
+\begin{hintbox}[File Associations under Windows]
+\small
+Under Windows, how a file is interpreted is determined by its extension. The \emph{Windows Registry} is a collection of system wide settings that, among other things, tells the system which filetypes to open with which programs. The key\\
+\texttt{[HKEY\_CLASSES\_ROOT\textbackslash py\_auto\_file\textbackslash shell\textbackslash Open\textbackslash command]}\\
+can be edited to change the associations with the file type.
+
+\vspace{3pt}
+Warning: Only edit the registry if you really know what you're doing.\\
+In doubt, keep typing \texttt{python myCode.py}.
+
+\vspace{3pt}
+\scriptsize
+\url{https://www.computerhope.com/issues/ch001348.htm}\\
+\url{https://superuser.com/questions/669142/how-to-set-file-association-in-windows-explorer}
+\end{hintbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{codebox}[Example: \texttt{shebang.py}]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+#!/usr/bin/python3
+import sys
+print(sys.argv)
+\end{minted}
+\end{codebox}
+%
+\begin{cmdbox}[Console: \texttt{shebang.py}]
+\scriptsize
+{\color{green}blue-chameleon@blue-chameleon-HP-250-G7-Notebook-PC}:{\color{blue}\textasciitilde/tmp}\$
+./shebang.py
+
+['./shebang.py']
+
+{\color{green}blue-chameleon@blue-chameleon-HP-250-G7-Notebook-PC}:{\color{blue}\textasciitilde/tmp}\$
+./shebang.py bla ble "and more"
+
+'./shebang.py', 'bla', 'ble', 'and more']
+
+{\color{green}blue-chameleon@blue-chameleon-HP-250-G7-Notebook-PC}:{\color{blue}\textasciitilde/tmp}\$
+./shebang.py options
+
+['./shebang.py', 'options']
+
+{\color{green}blue-chameleon@blue-chameleon-HP-250-G7-Notebook-PC}:{\color{blue}\textasciitilde/tmp}\$
+python3 -I ./shebang.py options
+
+['./shebang.py', 'options']
+\end{cmdbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Pipes and Device Files: stdin, stdout, stderr}
+%
+\begin{itemize}
+\item Output to / Input from the console: formally writing/reading a \emph{file}
+\item Same OS infrastructure like files (\eg buffers), but ultimatively different hardware
+\item \texttt{sys.stdin} -- standard input: where \inPy{input} takes its results from
+\item \texttt{sys.stdout} -- standard output: where \inPy{print} writes to
+\item \texttt{sys.stderr} -- usually the same as stdout. Used for error messages
+\item Can be \emph{redirected}
+	\begin{itemize}
+	\item \texttt{command > file}: send data written to stdout in \texttt{file} (overwrite)
+	\item \texttt{command >{}> file}: append to \texttt{file} instead of overwriting
+	\item \texttt{command 2> file} and \texttt{command 2>> file}: same for stderr
+	\item \texttt{command 2>\&1}: redirect stderr to stdout
+	\item \texttt{command > file 2>\&1}: redirect both, stdout and stderr to \texttt{file}
+	\item \texttt{command < file}: use file as input for \texttt{command}
+	\item \texttt{cmdA | cmdB}: use output (stdout) of \texttt{cmdA} as input for \texttt{cmdB}
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{codebox}[Example: \texttt{channels.py}]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+print("regular output to stdout")
+raise Exception("Exceptions go to stderr")
+\end{minted}
+\end{codebox}
+%
+\begin{cmdbox}[Command line]
+\scriptsize
+{\color{green}blue-chameleon@blue-chameleon-HP-250-G7-Notebook-PC}:{\color{blue}\textasciitilde/tmp}\$
+python3 ./channels.py > out.txt
+\end{cmdbox}
+%
+\begin{cmdbox}[Console Output]
+\begin{minted}[fontsize=\scriptsize]{text}
+Traceback (most recent call last):
+  File "./channels.py", line 2, in <module>
+    raise Exception("Exceptions go to stderr")
+Exception: Exceptions go to stderr
+\end{minted}
+\end{cmdbox}
+%
+\begin{cmdbox}[File \texttt{out.txt}]
+\begin{minted}[fontsize=\scriptsize]{text}
+regular output to stdout
+\end{minted}
+\end{cmdbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+% sys.stdin, stdout, stderr
+% to popen
 
 % =========================================================================== %
 
