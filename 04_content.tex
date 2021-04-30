@@ -331,7 +331,7 @@ fig.show()
 print( scipy.integrate.dblquad(gaussian,
                                -scipy.inf, scipy.inf,
                                -scipy.inf, scipy.inf,
-                               args=(val_alpha,)) )
+                               args=(alpha,)) )
 \end{minted}
 \end{codebox}
 \end{minipage}
@@ -382,7 +382,7 @@ print( scipy.integrate.dblquad(gaussian,
 
 \begin{frame}[fragile]{Vector Integrators: Interface}
 %
-\begin{codebox}[Syntax: Title goes here]
+\begin{codebox}[Syntax: Calls to Vector Integrators]
 \begin{minted}[fontsize=\scriptsize]{python3}
 from scipy import integrate as integrate
 

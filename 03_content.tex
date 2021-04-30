@@ -430,7 +430,7 @@ def makeSeries (N) :
       result = 0
       for n in range(N) :
         result += expr(n,*args,**kwargs)
-        return result
+      return result
     return wrapper
   return decorator
 \end{minted}
@@ -696,7 +696,7 @@ foo.bar = 666
 \item By convention: leading underscore (\enquote{private attribute})
 \item \texttt{@property} makes the function be called at every read access
 \item \texttt{@bar.setter} makes the function be called at every write access
-\item Still possible to \inPy{foo._bar = 66t}, but now at least implicint warning by underscore
+\item Still possible to \inPy{foo._bar = 66}, but now at least implicit warning by underscore
 \item Improved Coding convenience for us
 \end{itemize}
 %

@@ -305,13 +305,13 @@ Source: \url{https://xkcd.com/1360/}
 \begin{minted}{python3}
 with os.scandir() as it :
     for entry in it :
-        ...
+        commands
 \end{minted}
 	\end{itemize}
 \item For both of them
 	\begin{itemize}
 	\item No particular order
-	\item Neither of them supports wildcards (\texttt{*} or \texttt{?})
+	\item Neither of them supports wildcards (\texttt{*} or \texttt{?} -- see later)
 	\end{itemize}
 \end{itemize}
 %
@@ -375,7 +375,7 @@ with os.scandir() as it :
                   raster equal height,
                   nobeforeafter,
                   raster column skip=0.5cm]
-\begin{cmdbox}[Output: \texttt{scandir}]
+\begin{cmdbox}[Output: \texttt{listdir}]
 \begin{minted}[fontsize=\scriptsize]{text}
 Erstiheft
 schausche.jpg
@@ -389,7 +389,7 @@ PK_Strunk_Exp_Mechanik.pdf
 \end{minted}
 \end{cmdbox}
 %
-\begin{cmdbox}[Output: \texttt{listdir}]
+\begin{cmdbox}[Output: \texttt{scandir}]
 \begin{minted}[fontsize=\scriptsize]{text}
 <DirEntry 'Erstiheft'>
 <DirEntry 'schausche.jpg'>
@@ -408,7 +408,7 @@ PK_Strunk_Exp_Mechanik.pdf
 
 % =========================================================================== %
 
-\begin{frame}{Traversing the File System: \texttt{glob} Module}
+\begin{frame}[fragile]{Traversing the File System: \texttt{glob} Module}
 %
 \begin{itemize}
 \item Often: Need to filter for a certain file type (\eg \texttt{.jpg} files)
@@ -423,8 +423,12 @@ PK_Strunk_Exp_Mechanik.pdf
 	\end{itemize}
 \end{itemize}
 %
-\begin{hintbox}[Module \texttt{pathlib}]
+\begin{hintbox}[Module \texttt{pathlib} and \texttt{os.walk}]
+\small
 Pythons \texttt{pathlib} offes an object oriented approach to file system travesal. It is built upon \texttt{os} and \texttt{glob}, but a little more unwieldy for most cases. Go have a look at it under \url{https://docs.python.org/3/library/pathlib.html}.
+
+Finally, have a look at \texttt{os.walk} which allows to explore a directory tree conveniently.\\
+See \url{https://docs.python.org/3/library/os.html#os.walk}
 \end{hintbox}
 %
 \end{frame}
@@ -530,7 +534,7 @@ print( glob.glob("**/*.tex", recursive=True) )
 \item \texttt{os.path.getsize(path)}
 	\begin{itemize}
 	\item Returns size of file in bytes
-	\item Raises an \texttt{OSError} if the file does not exist or is inaccessible.
+	\item Raises an \inPy{OSError} if the file does not exist or is inaccessible.
 	\end{itemize}
 \item \texttt{os.path.isfile(path)}, \texttt{os.path.isdir(path)}, \texttt{os.path.islink(path)}
 	\begin{itemize}
@@ -553,7 +557,7 @@ print( glob.glob("**/*.tex", recursive=True) )
 \begin{itemize}
 \item Recap: You can start your Python codes from the command line:\\
 	\texttt{python3 yourCode.py}
-\item Further command line options for the Python interpreter: \inPy{https://docs.python.org/3/using/cmdline.html}
+\item Further command line options for the Python interpreter: \url{https://docs.python.org/3/using/cmdline.html}
 \item Script (or module) must be the last command line argument
 \item \texttt{sys.argv}
 	\begin{itemize}
@@ -692,8 +696,29 @@ regular output to stdout
 
 % =========================================================================== %
 
-% sys.stdin, stdout, stderr
-% to popen
+\begin{frame}[fragile]{\texttt{sys.stdXXX} File Objects}
+%
+\begin{itemize}
+\item In Module \texttt{sys}: constants \texttt{stdin}, \texttt{stdout}, \texttt{stderr}
+\item Formally: File Handles, as returned from \inPy{open}
+\end{itemize}
+%
+\begin{codebox}[Example: directly acessing the device files]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import sys
+x = sys.stdin.read(5)     # roughly: x = input()[:5]
+sys.stdout.write(x)       # exactly the same as print(x)
+sys.stderr.write("You can do warings like this...")
+print("... or like that", file=sys.stderr)
+\end{minted}
+\end{codebox}
+%
+\begin{hintbox}[Understand{,} don't use]
+\small
+The above code is only to illustrate how the \texttt{stdXXX} work. Their proper use is not for ScreenIO, but rather for controlling other programs. (Maybe with exception of the warnings mechanism)
+\end{hintbox}
+%
+\end{frame}
 
 % =========================================================================== %
 
@@ -703,63 +728,84 @@ regular output to stdout
                   raster equal height,
                   nobeforeafter,
                   raster column skip=0.5cm]
-\begin{codebox}[Beispiel: Title goes here]
-\begin{minted}[fontsize=\scriptsize, linenos]{python3}
-foo
-\end{minted}
-\end{codebox}
-%
-\begin{codebox}[Beispiel: Title goes here]
-\begin{minted}[fontsize=\scriptsize, linenos]{python3}
-bar
-\end{minted}
-\end{codebox}
-\end{tcbraster}
-%
-\end{frame}
-
-% =========================================================================== %
-
-\begin{frame}[fragile]{Kapitel 6}
-%
-\begin{itemize}
-\item Optionale Parameter
-\item Variadische Funktionen
-\item Funktionen als Rückgabewerte
-\item Lambdas
-\item Rekursion
-\end{itemize}
-%
-\end{frame}
-
-% =========================================================================== %
-
-\begin{frame}[fragile]{\inPy{while}-Schleifen}
-%
-\begin{columns}[T]
-\column{.5\linewidth}
-\begin{itemize}
-\item x
-\end{itemize}
-%
-\column{.5\linewidth}
-\begin{codebox}[Syntax: Title goes here]
-\begin{minted}[fontsize=\scriptsize]{python3}
-Stuff
-\end{minted}
-\end{codebox}
-\end{columns}
-%
-\end{frame}
-
-% =========================================================================== %
-
-\begin{frame}[fragile]
-%
-\begin{codebox}[Beispiel: Title goes here]
+\begin{codebox}[Example: Remote Controll]
 \begin{minted}[linenos, fontsize=\scriptsize]{python3}
-x
+import os
+
+process = os.popen('cat', 'w')
+
+print('=' * 40)
+print(process)
+process.write("Some ")
+print("---")
+process.write("content\n")
+process.close()
+print('=' * 40)
 \end{minted}
 \end{codebox}
 %
+\begin{cmdbox}[Output: Remote Controll]
+\begin{minted}[fontsize=\scriptsize]{text}
+========================================
+<os._wrap_close object at 0x7fa94da1cf70>
+---
+Some content
+========================================
+\end{minted}
+\end{cmdbox}
+\end{tcbraster}
+
+\begin{hintbox}[Commands \texttt{cat} and \texttt{type}]
+\small
+Under unixoid systems (Linux, Mac), the command \texttt{cat} is used to write the content of a file to stdout. \texttt{cat myFile.txt} will simply print the file content on screen.
+
+Under Windows, the command \texttt{type} serves the same purpose.
+\end{hintbox}
+%
 \end{frame}
+
+% =========================================================================== %
+
+\begin{frame}
+%
+\begin{hintbox}[Module \texttt{subprocess}]
+The module \texttt{subprocess} allows for better control of what goes where, what is executed when and how to deal with errors.
+
+Go check it out under:\\
+\url{https://docs.python.org/3/library/subprocess.html} 
+\end{hintbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Misc \texttt{sys} Stuff}
+%
+\begin{itemize}
+\item \texttt{sys.getsizeof(object)}
+	\begin{itemize}
+	\item Supposedly returns memory requirements of \texttt{object} in bytes
+	\item Uses \inPy{__sizeof__}, which is user implemented and can be faulty
+	\item You can trust the Python standard library (anything I show in this course)
+	\end{itemize}
+\item \texttt{sys.modules}
+	\begin{itemize}
+	\item \inPy{dict} of all loaded modules
+	\item Key is their natural name, not their alias (cf. \inPy{import numpy as np})
+	\end{itemize}
+\item \texttt{sys.getrecursionlimit()} and \texttt{setrecursionlimit()}
+	\begin{itemize}
+	\item Tell/set the maximum depth of recursion
+	\item Default: 1000
+	\end{itemize}
+\item \texttt{sys.float\_info}
+	\begin{itemize}
+	\item Data Class
+	\item Informs about limits of FPU
+	\item \inPy{print(sys.float_info)}, \inPy{print(sys.float_info.min)}
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
