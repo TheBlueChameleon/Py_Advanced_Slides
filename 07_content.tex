@@ -650,7 +650,7 @@ python3 -I ./shebang.py options
 	\begin{itemize}
 	\item \texttt{command > file}: send data written to stdout in \texttt{file} (overwrite)
 	\item \texttt{command >{}> file}: append to \texttt{file} instead of overwriting
-	\item \texttt{command 2> file} and \texttt{command 2>> file}: same for stderr
+	\item \texttt{command 2> file} and \texttt{command 2>{}> file}: same for stderr
 	\item \texttt{command 2>\&1}: redirect stderr to stdout
 	\item \texttt{command > file 2>\&1}: redirect both, stdout and stderr to \texttt{file}
 	\item \texttt{command < file}: use file as input for \texttt{command}
@@ -809,3 +809,32 @@ Go check it out under:\\
 \end{frame}
 
 % =========================================================================== %
+
+\begin{frame}{Misc \texttt{os} Stuff}
+%
+\begin{itemize}
+\item \texttt{sys.system(command)}
+	\begin{itemize}
+	\item Run \texttt{command} as if the string was entered into the command line
+	\item Allows command line arguments, piping and all the command line magic you might know
+	\end{itemize}
+\item \texttt{os.name}
+	\begin{itemize}
+	\item A string describing the operating system
+	\item Either of \texttt{posix} (unixoid), \texttt{nt} (Windows) or \texttt{java}
+	\item Also: try \texttt{sys.platform}
+	\end{itemize}
+\item \texttt{os.environ}
+	\begin{itemize}
+	\item A \inPy{dict} of all environment variables
+	\end{itemize}
+\item \texttt{os.urandom(size)}
+	\begin{itemize}
+	\item Returns \texttt{size} bytes of random data
+	\item Generated from system activity
+	\item Apt for cryptographic use
+	\item \texttt{Bytes} object
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}

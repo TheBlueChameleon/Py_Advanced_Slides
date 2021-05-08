@@ -254,7 +254,7 @@ See Documentation\\
 %
 \column{.5\linewidth}
 \begin{codebox}[Example: Simple Integral]
-\begin{minted}[fontsize=\scriptsize]{python3}
+\begin{minted}[fontsize=\scriptsize, linenos]{python3}
 import math
 from scipy import integrate as integrate
 
@@ -674,15 +674,15 @@ Higher order ODEs:
 Transform into a system of first oder ODEs:
 \begin{align*}
 	\begin{pmatrix}
-		y^{(n)} \\
-		y^{(n-1)} \\
+		y^{(1)} \\
+		y^{(2)} \\
 		\hdots \\
-		y^{(1)}
+		y^{(n)}
 	\end{pmatrix}
 &=
 	\begin{pmatrix}
-		\dv{x} y^{(n-1)} \\
-		\dv{x} y^{(n-2)} \\
+		\dv{x} y^{(0)} \\
+		\dv{x} y^{(1)} \\
 		\hdots \\
 		f_{n-1}(y^{(n-1)})(t) + \ldots + f_0(y)(t)
 	\end{pmatrix}
