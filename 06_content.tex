@@ -436,9 +436,6 @@ dtype: int64
 %
 \begin{columns}[T]
 \column{.5\linewidth}
-%\begin{Large}
-%	\vspace{6pt}
-%\end{Large}
 \begin{itemize}
 \item Represents a \emph{table} of data
 \item Collection of \texttt{pd.Series}
@@ -451,16 +448,16 @@ dtype: int64
 \column{.5\linewidth}
 \begin{codebox}[Syntax: Creating a pandas DataFrame]
 \begin{minted}[fontsize=\scriptsize]{python3}
-s = pd.DataFrame(np_array_2D)
-s = pd.DataFrame(np_array_2D,
+df = pd.DataFrame(np_array_2D)
+df = pd.DataFrame(np_array_2D,
                  index  = iterable1,
                  column = iterabel2
 )
-s = pd.DataFrame(scalar,
+df = pd.DataFrame(scalar,
                  index  = iterable1,
                  column = iterabel2
 )
-s = pd.DataFrame(dict_key_Series)
+df = pd.DataFrame(dict_key_Series)
 ...
 \end{minted}
 \end{codebox}
