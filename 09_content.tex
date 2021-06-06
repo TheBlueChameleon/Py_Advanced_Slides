@@ -1,0 +1,716 @@
+% =========================================================================== %
+
+\begin{frame}[t,plain]
+\titlepage
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Recap}
+%
+\begin{columns}[T]
+\column{.5\linewidth}
+\begin{itemize}
+\item Machine Learning: Make a computer find solutions on its own
+\item Several strategies: decision trees, support vector machines, ...
+\item Making use of the strenghts of computers: arithmetics
+\item In Detail: Deep Learning
+\item Implementation with keras frontend
+\end{itemize}
+%
+\column{.5\linewidth}
+\begin{itemize}
+\item Representation of input data as vector
+\item Apply knowledge: Matrix multiplication
+\item Learning: Changing matrix elements
+\item Cost function and method of steepest descent
+\item Activation functions and other layer types
+\end{itemize}
+%
+\end{columns}
+%
+\begin{center}
+	\emph{Any Questions?}
+\end{center}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Git Commit}
+%
+\begin{center}
+	\includegraphics[width=.5\linewidth]{./gfx/xkcd-gitcommit}
+	
+	\vspace{12pt}
+	\emph{Merge branch 'asdfasjkfdlas/alkdjf' into 'sdkjfls-final'}
+	
+	Source: \url{https://xkcd.com/1296/}
+\end{center}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Maintaining Big Projects}
+%
+As our projects grow bigger, we face new problems:
+\begin{columns}[T]
+\column{.3\linewidth}
+\begin{itemize}
+\item Overviewing the outline
+	\begin{itemize}
+	\item When working in a team
+	\item Even when working alone
+	\end{itemize}
+\item[\Thus] Need Documentation!
+\end{itemize}
+%
+\column{.3\linewidth}
+\begin{itemize}
+\item Keeping the routines bug-free
+	\begin{itemize}
+	\item Routines on their own
+	\item Interactions with other parts
+	\end{itemize}
+\item[\Thus] Need Testing!
+\end{itemize}
+%
+\column{.3\linewidth}
+\begin{itemize}
+\item Recovering from accidents
+	\begin{itemize}
+	\item Hardware failure
+	\item Incompatible evolutions
+	\item Being stupid
+	\end{itemize}
+\item[\Thus] Need Backups!
+\end{itemize}
+\end{columns}
+%
+
+\vspace{12pt}
+Of course, we could do all of that manually, but... \emph{nah!}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]{DocStrings and Nametags}
+%
+\begin{itemize}
+\item Modules, funcitons and classes have two Dunders: \inPy{__name__} and \inPy{__doc__}
+\item \inPy{__name__}:
+	\begin{itemize}
+	\item Usually: File name without extension (\texttt{myModule.py} \thus \texttt{myModule})
+	\item Exception: if not imported: \inPy{__main__}
+	\end{itemize}
+\item \inPy{__doc__}:
+	\begin{itemize}
+	\item Arbitrary text
+	\item Text between triple double quotes: \inPy{"""this is a docstring"""}
+	\item Can be multiline
+	\item Will be shown when invoking \inPy{help}
+	\item Can be used with other tools!
+	\item Templates by Spyder
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{codebox}[Example: Function DocString]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+def printHead(text, width = 80) :
+    """
+    Prints a headline box with text <text> of <width> characters in width.
+    
+    Example:
+    >>> printHead('headline', 40)
+    ########################################
+    #               headline               #
+    ########################################
+    """
+    
+    formattext = "{" + f":^{width - 4}" + "}"            # e.g. "{:^36}"
+    
+    print("#" * width)
+    print("# " + formattext.format(text) + " #")
+    print("#" * width)
+
+help(printHead)
+\end{minted}
+\end{codebox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{codebox}[Example: Module DocString: TextTools.py]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+""" 
+Text Tools
+
+This module offers helper tools for putting nice text on terminal outputs
+"""
+
+def printHead(text, width = 80) :
+    ...
+
+if __name__ = '__main__' :
+    ...
+    # your test code here!
+\end{minted}
+\end{codebox}
+%
+\begin{codebox}[Example: Module Docstring: TextTools.py]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import TextTools
+
+help(TextTools)
+\end{minted}
+\end{codebox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{tcbraster}[raster columns=2,
+                  raster equal height,
+                  nobeforeafter,
+                  raster column skip=0.5cm]
+\begin{codebox}[Example: Class DocString]
+\begin{minted}[fontsize=\scriptsize, linenos]{python3}
+class Master :
+    """ A masterfully created
+        piece of code! """
+    
+    def __init__(self) :
+        """ instantiates a new
+            piece of baffling
+            awesome software """
+        print("master created")
+    
+    ...
+\end{minted}
+\end{codebox}
+%
+\begin{cmdbox}[Output: \texttt{help(Master)}]
+\begin{minted}[fontsize=\scriptsize, linenos]{text}
+class Master(builtins.object)
+ |  A masterfully created piece of code!
+ |  
+ |  Methods defined here:
+ |  
+ |  __init__(self)
+ |      instantiates a new piece of
+ |      baffling awesome software
+ |  
+ |  --------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables
+ |     (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the
+ |      object (if defined)
+\end{minted}
+\end{cmdbox}
+\end{tcbraster}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{How Is This Better Than Comments?}
+%
+\begin{itemize}
+\item Available \enquote{on demand} (without browsing the source)
+\item Allows using other features (see below)
+\item Two methods for inserting comments allow classification
+	\begin{itemize}
+	\item \enquote{Normal} comments (\texttt{\#}): explain how code \emph{works}
+	\item[\Thus] Needed when you want to \emph{edit} the code
+	\item Docstrings: explain how code \emph{is used}
+	\item[\Thus] Needed when you want to \emph{use} the code
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{codebox}[Example: DocStrings and Comments]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import numpy as np
+def numpy_isqrt(number):
+    """ approximates 1 / sqrt(number) FAST """
+    
+    # source: https://github.com/ajcr/ajcr.github.io/blob/
+    #              master/_posts/2016-04-01-fast-inverse-square-root-python.md
+    # details: https://en.wikipedia.org/wiki/Fast_inverse_square_root#Algorithm
+    
+    y = np.float32(number)                        # ensure y is a single precision float    
+    i = y.view(np.int32)                          # typecast float -> int
+    i = np.int32(0x5f3759df) - np.int32(i >> 1)   # evil bit magic, making use of:
+                                                  #   log_2(1/sqrt(x)) = -1/2 log_2(x)
+    y = i.view(np.float32)                        # typecast int -> float
+    
+    # one iteration of Newton's method to increase accuracy
+    threehalfs = 1.5
+    x2 = number * 0.5
+    y = y * (threehalfs - (x2 * y * y))
+    return float(y)
+\end{minted}
+\end{codebox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{External Documents}
+%
+\begin{itemize}
+\item Users prefer not to search through (extensive) source codes
+\item Instead: External PDF/HTML/... documentation
+\item A lot of work to write and maintain!
+\item doxygen: tool to \emph{gen}erate professional looking \emph{docs} (hence the name)
+\item Uses DocStrings and Comments to compile a documentation
+\item Compatible with Python, C, C++, Java, Fortran, VHDL and other languages
+\item Command line driven; graphical front doxywizard end exists
+\item Details: \url{https://www.doxygen.nl/manual/index.html}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}
+%
+\begin{hintbox}[Docs Are Not Just For Other People!]
+Never underestimate the positive impact of documenting your own code!
+
+\vspace{4pt}
+First of all, you'll look up frequently once projects get bigger. Having everything in a uniform and indexed and hyperlinked format saves a lot of time and avoids bugs. You'll notice the difference soon enough!
+
+\vspace{4pt}
+Second, writing a good documentation forces you to clearly specify what your classes, methods, ... do. The mere act of clearly defining interfaces and effects removes bugs before they are written!
+
+\vspace{4pt}
+To make full use of the mental benefits, write the documentation \emph{before} you write the code!
+\end{hintbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Type Hints}
+%
+\begin{itemize}
+\item Python is \emph{dynamically typed} (\enquote{ducktyped})
+	\begin{itemize}
+	\item Data type of objects can change at runtime
+	\item No type checking by the system
+	\item Can lead to problems, \eg \inPy{math.sqrt("nine")}
+	\end{itemize}
+\item Type hints: Telling Python what to expect
+	\begin{itemize}
+	\item In parameter list: \inPy{parameter : type}
+	\item Return type: \inPy{(...) -> type}
+	\item Result: Dunder \inPy{__annotations__} has a \inPy{dict} of form \inPy{{'parameter' : type}}
+	\item Return type in this \inPy{dict} with key \inPy{'return'}
+	\end{itemize}
+\item Type hints ignored by Python!
+	\begin{itemize}
+	\item But: Helps you as a develloper to remember the correct use
+	\item External tools can use this!
+	\item \enquote{Code is more often read than written.}
+		\begin{flushright}
+		\emph{Guido van Rossum, benevolent dictator for life}
+		\end{flushright}
+	\end{itemize}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{codebox}[Example: Type Hints]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import numpy as np
+def numpy_isqrt(number : float ) -> float :
+    i = np.float32(number).view(np.int32)
+    i = np.int32(0x5f3759df) - np.int32(i >> 1)
+    y = i.view(np.float32)
+    x2 = number * 0.5
+    y = y * (1.5 - (x2 * y * y))
+    return float(y)
+
+print( numpy_isqrt.__annotations__ )
+print( numpy_isqrt(9) )
+print( numpy_isqrt("9") )
+\end{minted}
+\end{codebox}
+%
+\begin{cmdbox}[Output: Type Hints]
+\begin{minted}[linenos, fontsize=\scriptsize]{text}
+{'number': <class 'numpy.float32'>, 'return': <class 'float'>}
+0.3329532012819704
+TypeError: can't multiply sequence by non-int of type 'float'
+\end{minted}
+\end{cmdbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]{Type Hints: So What Are They Good For?}
+%
+\vspace{-15pt}
+\begin{columns}[t]
+\column{.6\linewidth}
+\begin{itemize}
+\item Spyder: Use for generation of DocStrings
+\item MyPy: External Tool
+	\begin{itemize}
+	\item Test all calls
+	\item Written in Python
+	\end{itemize}
+\item Install
+	\begin{itemize}
+	\item \texttt{conda install -c conda-forge mypy}
+	\item Or: \texttt{pip3 install mypy}
+	\item Or \texttt{sudo apt install mypy} (Linux)
+	\end{itemize}
+\item Use
+	\begin{itemize}
+	\item \texttt{python3 -m mypy yourcode.py}
+	\item \texttt{mypy yourcode.py}
+	\end{itemize}
+\end{itemize}
+%
+\column{.45\linewidth}
+\begin{codebox}[Example: Auto-DocString]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+def someFunc (param : int) -> str :
+    """
+
+
+    Parameters
+    ----------
+    param : int
+        DESCRIPTION.
+
+    Returns
+    -------
+    str 
+        DESCRIPTION.
+
+    """
+\end{minted}
+\end{codebox}
+\end{columns}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+% : (int, float)
+\begin{codebox}[Example: \texttt{concatFunc.py}]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+def concatenateNFold(f, x, n : int) :
+    for i in range(n) :
+        x = f(x)
+    return x
+
+f = lambda x : x**2
+print( concatenateNFold(f, 2, 3) )
+print( concatenateNFold(f, 2, 2.5) )
+\end{minted}
+\end{codebox}
+%
+\begin{cmdbox}[Output: \texttt{python3 -m mypy concatFunc.py}]
+\begin{minted}[linenos, fontsize=\scriptsize]{text}
+comments.py:8: error: Argument 3 to "concatenateNFold" has incompatible type "float";
+  expected "int"
+\end{minted}
+\end{cmdbox}
+%
+\begin{hintbox}[Silent Bugs]
+\small
+Not all Type Errors only raise exceptions -- most of them are much less benign!
+\end{hintbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]{Polymorphic Functions}
+%
+\begin{itemize}
+\item Some function can take multiple input types
+	\begin{itemize}
+	\item Special type hint class: \texttt{typing.Union[type1, type2, ...]}
+	\item Load with \inPy{from typing import Unioin}
+	\end{itemize}
+\item Some functions return tuples
+	\begin{itemize}
+	\item Type hint class \texttt{typing.Tuple}
+	\item Load with \inPy{from typing import Tuple}
+	\end{itemize}
+\end{itemize}
+%
+\begin{tcbraster}[raster columns=2,
+                  raster equal height,
+                  nobeforeafter,
+                  raster column skip=0.5cm]
+\begin{codebox}[Example: \texttt{polymorphic.py}]
+\begin{minted}[fontsize=\scriptsize, linenos]{python3}
+from typing import Union, Tuple
+
+def f (x : Union[list, tuple]) \
+-> Tuple[int, int] :
+    return len(x), max(x)
+
+print(f( tuple((1, 2, 3)) ))
+\end{minted}
+\end{codebox}
+%
+\begin{cmdbox}[Output: \texttt{mypy polymorphic.py}]
+\begin{minted}[fontsize=\scriptsize, linenos]{text}
+Success: no issues found in 1 source file
+\end{minted}
+\end{cmdbox}
+\end{tcbraster}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]{NumPy and mypy...}
+%
+\begin{itemize}
+\item Precompiled types of NumPy not analyzed by mypy
+\item NumPy version >= 1.21 has a plugin, but
+\item Not yet available via pip
+\item Workaround: tell mypy to ignore unknown types
+\item File \texttt{mypy.ini} or \texttt{.mypy.ini} in CWD
+\end{itemize}
+%
+\begin{cmdbox}[mypy.ini]
+\begin{minted}[fontsize=\scriptsize]{text}
+[mypy]
+ignore_missing_imports = True
+#plugins = numpy.typing.mypy_plugin     # if you get numpy version >= 1.21
+\end{minted}
+\end{cmdbox}
+%
+\begin{hintbox}[Current Numpy Version]
+\begin{minted}[fontsize=\scriptsize]{text}
+python3 -c "import numpy as np; print(np.__version__)"
+\end{minted}
+\end{hintbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Explicit Tests}
+%
+\begin{itemize}
+\item Module \texttt{doctest} (installed by default) can use DocStrings for tests
+\item Ignores most lines
+\item Exception: lines that begin with \texttt{>{}>{}>} or \texttt{...} will be treated like normal Python code
+\item Subsequent lines: expected console output
+\item If equal -- no output
+\item Otherwise: error report
+\item Multiple tests in sequence possible
+\item Invoke by \texttt{doctest.testmod()}
+\item Usually only if \inPy{__name__ == "__main__"}
+\item Details: \url{https://docs.python.org/3/library/doctest.html}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{tcbraster}[raster columns=2,
+                  raster equal height,
+                  nobeforeafter,
+                  raster column skip=0.5cm]
+\begin{codebox}[Example: DocTest]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import doctest
+
+def add(a : int, b : int) -> int :
+    """ Return the sum of two integers
+    Examples:
+    >>> add(2, 3)
+    5
+    
+    >>> x = 2
+    >>> for y in  range(2, 4) :
+    ...     add(x, y)
+    4
+    5
+    
+    >>> add(2, 2)
+    5"""
+    return a + b
+
+if __name__ == "__main__" :
+    print( doctest.testmod() )
+\end{minted}
+\end{codebox}
+%
+\begin{cmdbox}[Output: DocTest]
+\begin{minted}[fontsize=\scriptsize, linenos]{text}
+***********************************
+File "doctest.py", line 15, in 
+  __main__.add
+Failed example:
+    add(2, 2)
+Expected:
+    5
+Got:
+    4
+***********************************
+1 items had failures:
+   1 of   4 in __main__.add
+***Test Failed*** 1 failures.
+TestResults(failed=1, attempted=4)
+\end{minted}
+\end{cmdbox}
+
+%
+\end{tcbraster}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{What to test}
+%
+\begin{tcolorbox}[title=Tweet by @brenankeller{,} Engineer at snapchat]
+\small
+A QA engineer walks into a bar. Orders a beer. Orders 0 beers. Orders 99999999999 beers. Orders a lizard. Orders -1 beers. Orders a ueicbksjdhd. 
+
+First real customer walks in and asks where the bathroom is. The bar bursts into flames, killing everyone.
+\begin{flushright}
+\tiny
+\url{https://twitter.com/brenankeller/status/1068615953989087232}
+\end{flushright}
+\end{tcolorbox}
+%
+There is no such thing as too much testing. But at the very least, you should test:
+\begin{itemize}
+\item Standard examples
+\item Edge cases: large and small values, negative values, zero/null strings/empty lists/...
+\item Different input types
+\item Whether errors are really raised
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]{More Extensive Tests}
+%
+\begin{itemize}
+\item Tests in DocStrings \enquote{take up} space for documentation
+\item Hard to put complex scenarios in there
+\item Alternative: Module \texttt{unittest} (pre-installed)
+\item Define \inPy{class}es of tests
+	\begin{itemize}
+	\item Derived of \texttt{unittest.TestCase}
+	\item Each method is a test function
+	\item Invoked by \texttt{unittest.main()}
+	\item Fail/Pass based on several \emph{assert}s:
+		\begin{itemize}
+		\item \inPy{self.assertEqual(A, B)} -- pass if \texttt{A == B}
+		\item \inPy{self.assertTrue(X)} -- pass if \texttt{X == True}
+		\item \inPy{self.assertFalse(X)} -- guess what
+		\item
+\begin{minted}{python3}
+with self.assertRaises(E) :
+    codeThatRaisesE()
+\end{minted}
+		\end{itemize}
+	\item Repetitive preparation code in method \inPy{setUp(self)}
+	\end{itemize}
+\item Details: \url{https://docs.python.org/3/library/unittest.html}
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}[fragile]
+%
+\begin{codebox}[Example: Unittests with unittest]
+\begin{minted}[linenos, fontsize=\scriptsize]{python3}
+import unittest
+
+class TestStringMethods(unittest.TestCase):
+
+    def test_upper(self):
+        self.assertEqual('foo'.upper(), 'FOO')
+
+    def test_isupper(self):
+        self.assertTrue('FOO'.isupper())
+        self.assertFalse('Foo'.isupper())
+
+    def test_split(self):
+        s = 'hello world'
+        self.assertEqual(s.split(), ['hello', 'world'])
+        # check that s.split fails when the separator is not a string
+        with self.assertRaises(TypeError):
+            s.split(2)
+
+if __name__ == '__main__':
+    unittest.main()
+\end{minted}
+\end{codebox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}
+%
+\begin{hintbox}[A special kind of thinking]
+\begin{itemize}
+\item When writing tests, try to \enquote{beat} yourself: find cases that have to break the code!
+\item Remember: failed tests are a chance to improve your code. Undiscovered flaws are the true failres!
+\item Dont't be afraid to test absurd cases -- they will be needed more often than you'd think
+\item If possible, leave some time between writing the code and the test.
+	If you don't have the code fresh in your memory, your mind is closer to the state when you're going to use the code and you'll more easily find the flaws!
+\item Good unit tests are a sort of documentation, too!
+\end{itemize}
+\end{hintbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Backups}
+%
+Github
+%
+\end{frame}
