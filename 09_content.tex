@@ -288,7 +288,7 @@ def numpy_isqrt(number):
 \item doxygen: tool to \emph{gen}erate professional looking \emph{docs} (hence the name)
 \item Uses DocStrings and Comments to compile a documentation
 \item Compatible with Python, C, C++, Java, Fortran, VHDL and other languages
-\item Command line driven; graphical front doxywizard end exists
+\item Command line driven; graphical front end doxywizard end exists
 \item Details: \url{https://www.doxygen.nl/manual/index.html}
 \end{itemize}
 %
@@ -711,6 +711,82 @@ if __name__ == '__main__':
 
 \begin{frame}{Backups}
 %
-Github
+What we need:
+\begin{itemize}
+\item Keep backups on a separate machine
+\item Keep track of what we did (version comments)
+\item Compare different versions on a line-by-line basis
+\item Allow Branching and Merging
+\item Allow collaboration
+\item Memory efficiency
+\item Ease of use
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Git and GitHub}
+%
+\vspace{-6pt}
+\small
+\begin{itemize}
+\item Git
+	\begin{itemize}
+	\footnotesize
+	\item Is a version control software that provides all of that
+	\item Creates \emph{local} backups, can be connected to a server
+	\item Command line driven tool, graphical front ends exist
+	\item Installation
+		\begin{itemize}
+		\scriptsize
+		\item Linux: Usually pre-installed
+		\item Any system: see \url{https://www.atlassian.com/git/tutorials/install-git}
+		\end{itemize}
+	\end{itemize}
+	\vspace{-6pt}
+\item GitHub
+	\begin{itemize}
+	\footnotesize
+	\item Server for backups
+	\item Free to use
+	\item Can be used with git, but git not needed
+	\item Employers sometimes look into the public profiles of applicants to assess their prowess
+	\end{itemize}
+\end{itemize}
+%
+\vspace{-6pt}
+\begin{hintbox}[I use git + github for \emph{everything}]
+\footnotesize
+My master thesis (Code + \LaTeX), private projects, uni assignments, lecture slides, ...\\
+\url{https://github.com/TheBlueChameleon}
+\end{hintbox}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Git: Limitations}
+%
+\begin{itemize}
+\item Git stores \emph{changes}, not the entire codebase
+	\begin{itemize}
+	\item Saves memory
+	\item Allows \emph{merging} of branches and \emph{collaboration}
+	\end{itemize}
+\item Works well for \emph{text based} projects -- Code!
+\item Does not work well for binary data (images, compiled executables, Office-docs, etc.)
+\item Okay: Add required binary ressources that do not change often (\eg images for a report -- most of the changes affect the \emph{text})
+\end{itemize}
+%
+\end{frame}
+
+% =========================================================================== %
+
+\begin{frame}{Git and GitHub: Workflow}
+%
+\begin{itemize}
+\item Create a new \emph{repository} on github
+\end{itemize}
 %
 \end{frame}
