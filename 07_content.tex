@@ -83,7 +83,7 @@ Source: \url{https://xkcd.com/1360/}
 	\begin{itemize}
 	\item There can be multiple file systems (partitions) on a single physical device.
 	\item There are dozens of file systems, all with their particular inner workings
-	\item The scheme holds for most common file systems, such as NTFS, ext3 or ext4
+	\item The scheme holds for most common file systems, such as NTFS, ext or hfs+
 	\item We could do an entire lecture \emph{series} on file systems alone
 	\end{itemize}
 \end{columns}
@@ -155,8 +155,8 @@ Source: \url{https://xkcd.com/1360/}
 %
 \column{.5\linewidth}
 	\begin{itemize}
-	\item Moving/Deleting original file breaks the link
-	\item Works across file systems
+	\item Moving/Deleting original file breaks link
+	\item Works with folders and across file systems
 	\end{itemize}
 \end{columns}
 %
@@ -451,7 +451,7 @@ See \url{https://docs.python.org/3/library/os.html#os.walk}
 	\end{itemize}
 \item \texttt{**} -- any number of subdirectories (including zero)
 	\begin{itemize}
-	\item Only when \inPy{recursive = Tuue}
+	\item Only when \inPy{recursive = True}
 	\end{itemize}
 \item \texttt{[wildcard]} -- literal matching
 \end{itemize}
@@ -621,7 +621,7 @@ print(sys.argv)
 {\color{green}blue-chameleon@blue-chameleon-HP-250-G7-Notebook-PC}:{\color{blue}\textasciitilde/tmp}\$
 ./shebang.py bla ble "and more"
 
-'./shebang.py', 'bla', 'ble', 'and more']
+['./shebang.py', 'bla', 'ble', 'and more']
 
 {\color{green}blue-chameleon@blue-chameleon-HP-250-G7-Notebook-PC}:{\color{blue}\textasciitilde/tmp}\$
 ./shebang.py options
@@ -813,7 +813,7 @@ Go check it out under:\\
 \begin{frame}{Misc \texttt{os} Stuff}
 %
 \begin{itemize}
-\item \texttt{sys.system(command)}
+\item \texttt{os.system(command)}
 	\begin{itemize}
 	\item Run \texttt{command} as if the string was entered into the command line
 	\item Allows command line arguments, piping and all the command line magic you might know

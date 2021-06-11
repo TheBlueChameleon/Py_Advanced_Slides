@@ -783,10 +783,46 @@ My master thesis (Code + \LaTeX), private projects, uni assignments, lecture sli
 
 % =========================================================================== %
 
-\begin{frame}{Git and GitHub: Workflow}
+\begin{frame}[fragile]{Git and GitHub: Workflow}
 %
+\begin{columns}[T]
+\column{.5\linewidth}
 \begin{itemize}
-\item Create a new \emph{repository} on github
+\item Begin Work on your project
+\item Create a new \emph{repository} on github $\dagger$
+\item Set up a local repository $\dagger$
+	\begin{itemize}
+	\item \texttt{git init}
+	\end{itemize}
+\item (Optionally) create a \texttt{.gitignore} file $\dagger$
+\item Tell git which files to include in the backup
+	\begin{itemize}
+	\item \texttt{git add *}
+	\end{itemize}
 \end{itemize}
+
+\column{.5\linewidth}
+\begin{itemize}
+\item Compile all the added files to the local repository
+	\begin{itemize}
+	\item \texttt{git commit -m "first commit"}
+	\end{itemize}
+\item Set up the Server Connection $\dagger$
+	\begin{itemize}
+	\item \texttt{git branch -M main}
+	\item \texttt{git remote add origin <your git URI>}
+	\end{itemize}
+\item Push the updates to the server
+	\begin{itemize}
+	\item \texttt{git push -u origin main}
+	\end{itemize}
+\end{itemize}
+\end{columns}
+%
+
+\vspace{9pt}
+Steps marked with $\dagger$ need to be done only for the first commit.
+
+All of these steps are shown on \url{github.com} when creating a new repository.
 %
 \end{frame}
